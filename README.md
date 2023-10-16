@@ -78,9 +78,10 @@ Use the `scripts/all_results.ipynb` file to reproduce the figures that show all 
 
 ## Coming soon to our repository
 
-* ABACuS Verilog description
-* CACTI-based area, power, and energy analysis
+* ABACuS hardware design (Verilog description)
+* CACTI-based area, power, and energy analyses
 * Methodical approach to launching Slurm runs
+* Push-button script to replicate all results in the paper
 
 ## Contacts:
 Ataberk Olgun (ataberk.olgun [at] safari [dot] ethz [dot] ch)  
