@@ -2,7 +2,7 @@
 
 ABACuS is a new RowHammer mitigation mechanism that prevents RowHammer bitflips at low area, performance, and energy overheads for modern and future DRAM chips that are very vulnerable to RowHammer (e.g., with hammer counts as low as 125 inducing bitflips).
 
-## Cite DRAM Bender
+## Cite ABACuS
 
 Please cite the following paper if you find ABACuS useful:
 
