@@ -1,0 +1,87 @@
+# ABACuS: **A**ll-**B**ank **A**ctivation **C**o**u**nters for **S**calable and Low Overhead RowHammer Mitigation
+
+ABACuS is a new RowHammer mitigation mechanism that prevents RowHammer bitflips at low area, performance, and energy overheads for modern and future DRAM chips that are very vulnerable to RowHammer (e.g., with hammer counts as low as 125 inducing bitflips).
+
+## Cite DRAM Bender
+
+Please cite the following paper if you find ABACuS useful:
+
+A. Olgun, Y. C. Tugrul, N. Bostanci, I. E. Yuksel, H. Luo, S. Rhyner, A. G. Yaglikci, G. F. Oliveira, O. Mutlu, "ABACuS: All-Bank Activation Counters for Scalable and Low Overhead RowHammer Mitigation", To appear in USENIX Security 2024, August 2024.
+
+Link to the PDF: https://arxiv.org/pdf/XXXX.YYYY.pdf
+
+Below is bibtex format for citation.
+```
+@inproceedings{olgun2024abacus,
+      title={{ABACuS: All-Bank Activation Counters for Scalable and Low Overhead RowHammer Mitigation}}, 
+      author={Olgun, Ataberk and Tugrul, Yahya Can and Bostanci, Nisa and Yuksel, Ismail Emir and Luo, Haocong and Rhyner, Steve and Yaglikci, A. Giray and Oliveira, Geraldo F. and Mutlu, Onur},
+      year={2024},
+      booktitle={USENIX Security}
+}
+```
+
+## Repository File Structure
+
+```
+.
++-- act_injection_traces/           # Traces for the adversarial workloads (see Section 9.3 in our paper)
++-- configs/ABACuS/                 # Ramulator configurations for ABACuS and other state-of-the-art mechanisms
+|   +-- AttackPresent/              # Configurations used in simulating adversarial workloads
+|   +-- Others/                     # Configurations for four state-of-the-art mechanisms
+|   +-- ABACUS/                     # Configurations for ABACuS
+|   +-- Revision/                   # Configurations for ABACuS-Big (see Section 9.4 in our paper)           
++-- cputraces/                      # CPU traces for 62 single-core workloads
++-- ext/                            # External dependencies
++-- results/                        # All raw data for the results shown in our paper
++-- scripts/                        # Scripts to post process raw data and create the plots in our paper
++-- src/                            # Ramulator source code
+|   +-- RowHammer/                  # Source code of ABACUS and four other state-of-the-art mitigation mechanisms
+|   ...
+...
++-- README.md                       # This file
+```
+## Installation Guide:
+
+### Prerequisites:
+- G++ version above 8.4
+- Python with pandas, seaborn, and ipython
+- \[Optional\] Slurm 
+
+### Installation steps:
+- Simply run `./build.sh` to compile Ramulator
+- Download `abacus_cputraces.tar.bz2` (3.36 GiB) from this [Google Drive link](https://drive.google.com/file/d/1TY5oULe9tBKbcpqmjzTdyWM75NrY-0fP/view?usp=sharing)
+- Extract the traces so that they reside under `cputraces/`
+- \[Optional\] Download the `abacus_results.tar.bz2` (496 MiB) from this [Google Drive link](https://drive.google.com/file/d/16fzK-1Z8gabdCZ1oibe8Q8effy8wZsoP/view?usp=sharing) and extract it to `results/`
+- \[Optional\] Extract the zipped file `act_injection_traces.tar.bz2`
+
+## Example Use
+
+Skip to section "Reproducing Plots" in the README if you want to produce the plots in the paper from the data we provide. 
+
+### If you do not have slurm
+
+We provide all configurations we use in the paper under `configs/ABACUS`. Simply instruct `ramulator` to use one of the configuration files. See the `configs/ABACUS/ABACUS1000.yaml` for annotated key configuration parameters. To instruct ramulator to use this config file, run the following:
+
+`./ramulator -c configs/ABACUS/ABACUS1000.yaml`
+
+The simulation is configured to execute a single-core system running 429.mcf cpu trace with ABACuS tuned to mitigate RowHammer bitflips at a RowHammer threshold of 1000.
+
+### If you already have slurm
+
+Adapt `slurm.py` (and `slurm_adversarial.py`) to your working environment. We are working on providing a methodical approach to recreating all Slurm batch scripts and `slurm.py` must be manually modified for now. To do so, modify the absolute paths in the script (e.g., lines 26, 31-66, 212-214) to reflect valid directory paths in your system.
+
+Executing (modified) `slurm.py` and `slurmn_adversarial.py` will generate a `run.sh` file that you can use to schedule all slurm jobs (i.e., Ramulator simulations) required to produce all data that can be used in the next step to generate all plots in the paper.
+
+## Reproducing plots
+
+Use the `scripts/all_results.ipynb` file to reproduce the figures that show all our results in the paper (Figures 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, and 18).
+
+## Coming soon to our repository
+
+* ABACuS Verilog description
+* CACTI-based area, power, and energy analysis
+* Methodical approach to launching Slurm runs
+
+## Contacts:
+Ataberk Olgun (ataberk.olgun [at] safari [dot] ethz [dot] ch)  
+Nisa Bostanci (nisa.bostanci [at] safari [dot] ethz [dot] ch)  

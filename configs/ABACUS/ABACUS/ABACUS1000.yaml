@@ -1,0 +1,92 @@
+version: 1.0
+
+stats: # stats file naming
+  prefix: ddr4
+  suffix: stats
+
+processor: 
+  tick: 5 # how many processor ticks equal N memory ticks (N is in line 25)
+  trace:
+    - ./cputraces/429.mcf # the trace file to execute
+
+  ipc: 4 # how many instructions can the processor commit per cycle
+  depth: 128 # depth of the instruction queue in the processor
+
+  cache:
+    L3:
+      capacity: 2MB # L3 cache size (we use 2MB per core)
+      latency: 31 # L3 cache access latency in processor clock cycles
+
+  early_exit: True # whether to stop simulation when the processor reaches the expected limit for one workload (only valid for multi-core workloads)
+  expected_limit_insts: 200000000 # how many instructions should the processor execute before stopping simulation
+  warmup_insts: 100000000 # how many instructions should the processor execute before starting to collect statistics
+
+memory:
+  tick: 2 # how many memory ticks equal N processor ticks (see line 8 for N)
+  period: 0.625 # simulatod DDR4 clock period in nanoseconds
+  standard: DDR4 # memory standard name
+  spec:
+    org: 
+      preset: DDR4_8Gb_x8 # memory organization name
+      Ch: 1 # number of channels
+      Ra: 2 # number of ranks
+    speed:
+      preset: DDR4_3200W # speed grade of the simulated DRAM
+      refresh: 1X # refresh rate (1X typically corresponds to one refresh command every 7.8 microseconds)
+    power: # parameters used by the power model
+      VDD: 1.2 
+      VPP: 2.5
+
+      IDD0:  60
+      IPP0:  3
+      IDD2N: 50
+      IPP2N: 3
+      IDD3N: 55
+      IPP3N: 3
+      IDD4W: 145
+      IPP4W: 3
+      IDD4R: 145
+      IPP4R: 3
+      IDD5B: 362
+      IPP5B: 48
+      
+  controller:
+    addr_mapper:
+      type: Linear 
+      mapping: MOP4CLXOR # physical address to DRAM address mapping scheme
+    scheduler:
+      type: FRFCFS_CAP # DRAM command scheduling algorithm
+      cap: 16 # how many READ/WRITE commands (at maximum) to serve to a single row before forcefully precharging the row
+    row_policy: 
+      type: Opened # DRAM row policy (opened or closed). Opened keeps row open in anticipation of a row hit by a request that is currently not visible to the MC.
+    refresh:
+      type: Generic 
+    record_cmd_trace: False # whether to record a trace of all DRAM commands issued by the MC
+    print_cmd_trace: False # whether to print the trace of all DRAM commands issued by the MC
+    cmd_trace_prefix: "TEST" 
+    track_activation_count: False # whether to track the number of activations per row
+    activation_count_dump_file: "activate_dump.txt" # file name to dump the number of activations per row
+    otherq_max: 100000 # size of the otherq, needs to be large for preventive refreshes
+  translation:
+    type: LessRandom # how to translate the CPU trace's `virtual addresses` to physical addresses
+    hydra: Unfortunately # Unfortunately is the default and only valid parameter
+  
+
+post_warmup_settings: # settings to apply after the warmup period
+  memory:
+    controller:
+      track_activation_count: False # whether to track the number of activations per row
+      refresh_based_defense:
+        type: ABACUS # type of the rowhammer mitigation technique
+        probability_threshold: 0.158 
+        debug: False # whether to print debug messages
+        no_table_entries: 2720 # number of entries in the ABACUS table
+        activation_threshold: 500 # number of activations per row before a preventive refresh is issued (PRT)
+        para_engage_threshold: 1000 
+        reset_period: 64000000 # how many nanoseconds before resetting the ABACUS table
+        rowhammer_threshold: 1000
+        debug_verbose: False # whether to print debug messages
+        debug_base: False # whether to print debug messages
+        graphene_only: True 
+        counter_per_core: False 
+        reset_on_spillover: True # whether to reset the ABACUS table when the spillover counter reaches the reset period
