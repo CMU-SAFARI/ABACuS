@@ -8,7 +8,7 @@ Please cite the following paper if you find ABACuS useful:
 
 A. Olgun, Y. C. Tugrul, N. Bostanci, I. E. Yuksel, H. Luo, S. Rhyner, A. G. Yaglikci, G. F. Oliveira, O. Mutlu, "ABACuS: All-Bank Activation Counters for Scalable and Low Overhead RowHammer Mitigation", To appear in USENIX Security 2024, August 2024.
 
-Link to the PDF: [https://arxiv.org/pdf/XXXX.YYYY.pdf](https://arxiv.org/pdf/2310.09977.pdf)
+Link to the PDF: [https://arxiv.org/pdf/2310.09977.pdf](https://arxiv.org/pdf/2310.09977.pdf)
 
 Below is bibtex format for citation.
 ```
