@@ -24,6 +24,8 @@ Below is bibtex format for citation.
 
 ```
 .
++-- abacus_cacti/                   # Area, power, and energy analyses sources
++-- abacus_verilog/                 # Verilog HDL sources for ABACuS hardware design
 +-- act_injection_traces/           # Traces for the adversarial workloads (see Section 9.3 in our paper)
 +-- configs/ABACuS/                 # Ramulator configurations for ABACuS and other state-of-the-art mechanisms
 |   +-- AttackPresent/              # Configurations used in simulating adversarial workloads
@@ -76,10 +78,21 @@ Executing (modified) `slurm.py` and `slurmn_adversarial.py` will generate a `run
 
 Use the `scripts/all_results.ipynb` file to reproduce the figures that show all our results in the paper (Figures 2, 3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, and 18).
 
+## Reproducing area, power, and energy results
+
+We model ABACuS, Graphene, and Hydra's area, power, and energy cost using CACTI. Follow the three steps to reproduce our results (i.e., generate the values displayed in Table 1 in our paper).
+
+1. Navigate to `abacus_cacti/`
+2. Run `make opt` to compile CACTI (check `abacus_cacti/README` for detailed instructions on installing CACTI)
+3. Run the Python code blocks in `abacus_cacti/results.ipynb` to get area, power, and energy numbers for ABACuS, Graphene, and Hydra
+
+## Verilog HDL Implementation
+
+We implement ABACuS's hardware design in Verilog to faithfully measure its circuit latency. The Verilog implementation is under `abacus_verilog/`. You may use the `abacus_verilog/dc.tcl` script to launch Synopsys (synthesis) analysis runs.
+
 ## Coming soon to our repository
 
 * ABACuS hardware design (Verilog description)
-* CACTI-based area, power, and energy analyses
 * Methodical approach to launching Slurm runs
 * Push-button script to replicate all results in the paper
 
