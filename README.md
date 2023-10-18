@@ -2,13 +2,13 @@
 
 ABACuS is a new RowHammer mitigation mechanism that prevents RowHammer bitflips at low area, performance, and energy overheads for modern and future DRAM chips that are very vulnerable to RowHammer (e.g., with hammer counts as low as 125 inducing bitflips).
 
-## Cite DRAM Bender
+## Cite ABACuS
 
 Please cite the following paper if you find ABACuS useful:
 
 A. Olgun, Y. C. Tugrul, N. Bostanci, I. E. Yuksel, H. Luo, S. Rhyner, A. G. Yaglikci, G. F. Oliveira, O. Mutlu, "ABACuS: All-Bank Activation Counters for Scalable and Low Overhead RowHammer Mitigation", To appear in USENIX Security 2024, August 2024.
 
-Link to the PDF: https://arxiv.org/pdf/XXXX.YYYY.pdf
+Link to the PDF: [https://arxiv.org/pdf/2310.09977.pdf](https://arxiv.org/pdf/2310.09977.pdf)
 
 Below is bibtex format for citation.
 ```
@@ -78,9 +78,10 @@ Use the `scripts/all_results.ipynb` file to reproduce the figures that show all 
 
 ## Coming soon to our repository
 
-* ABACuS Verilog description
-* CACTI-based area, power, and energy analysis
+* ABACuS hardware design (Verilog description)
+* CACTI-based area, power, and energy analyses
 * Methodical approach to launching Slurm runs
+* Push-button script to replicate all results in the paper
 
 ## Contacts:
 Ataberk Olgun (ataberk.olgun [at] safari [dot] ethz [dot] ch)  
