@@ -15,7 +15,7 @@ A. Olgun, Y. C. Tugrul, N. Bostanci, I. E. Yuksel, H. Luo, S. Rhyner, A. G. Yagl
 
 Link to the PDF: [https://arxiv.org/pdf/2310.09977.pdf](https://arxiv.org/pdf/2310.09977.pdf)
 
-Below is bibtex format for citation.
+BibTeX format for your convenience:
 ```
 @inproceedings{olgun2024abacus,
       title={{ABACuS: All-Bank Activation Counters for Scalable and Low Overhead RowHammer Mitigation}}, 
@@ -67,15 +67,15 @@ Skip to section "Reproducing Plots" in the README if you want to produce the plo
 
 ### If you do not have slurm
 
-We provide all configurations we use in the paper under `configs/ABACUS`. Simply instruct `ramulator` to use one of the configuration files. See the `configs/ABACUS/ABACUS1000.yaml` for annotated key configuration parameters. To instruct ramulator to use this config file, run the following:
+We provide all configurations we use in the paper under `configs/ABACUS`. Simply instruct Ramulator to use one of the configuration files. See `configs/ABACUS/ABACUS1000.yaml` for annotated key configuration parameters. To instruct Ramulator to use this config file, run the following:
 
 `./ramulator -c configs/ABACUS/ABACUS1000.yaml`
 
-The simulation is configured to execute a single-core system running 429.mcf cpu trace with ABACuS tuned to mitigate RowHammer bitflips at a RowHammer threshold of 1000.
+The simulation is configured to execute a single-core system running the 429.mcf CPU trace with ABACuS tuned to mitigate RowHammer bitflips at a RowHammer threshold of 1000.
 
 ### If you already have slurm
 
-Adapt `slurm.py` (and `slurm_adversarial.py`) to your working environment. We are working on providing a methodical approach to recreating all Slurm batch scripts and `slurm.py` must be manually modified for now. To do so, modify the absolute paths in the script (e.g., lines 26, 31-66, 212-214) to reflect valid directory paths in your system.
+Adapt `slurm.py` (and `slurm_adversarial.py`) to your working environment. We are working on providing a methodical approach to recreating all Slurm batch scripts, and `slurm.py` must be manually modified for now. To do so, modify the absolute paths in the script (e.g., lines 26, 31-66, 212-214) to reflect valid directory paths in your system.
 
 Executing (modified) `slurm.py` and `slurmn_adversarial.py` will generate a `run.sh` file that you can use to schedule all slurm jobs (i.e., Ramulator simulations) required to produce all data that can be used in the next step to generate all plots in the paper.
 
