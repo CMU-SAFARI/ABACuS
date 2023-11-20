@@ -56,9 +56,9 @@ Below is bibtex format for citation.
 
 ### Installation steps:
 - Simply run `./build.sh` to compile Ramulator
-- Download `abacus_cputraces.tar.bz2` (3.36 GiB) from this [Google Drive link](https://drive.google.com/file/d/1TY5oULe9tBKbcpqmjzTdyWM75NrY-0fP/view?usp=sharing)
+- Download the traces `abacus_cputraces.tar.bz2` (3.36 GiB) from this [Google Drive link](https://drive.google.com/file/d/1TY5oULe9tBKbcpqmjzTdyWM75NrY-0fP/view?usp=sharing)
 - Extract the traces so that they reside under `cputraces/`
-- \[Optional\] Download the `abacus_results.tar.bz2` (496 MiB) from this [Google Drive link](https://drive.google.com/file/d/16fzK-1Z8gabdCZ1oibe8Q8effy8wZsoP/view?usp=sharing) and extract it to `results/`
+- \[Optional\] Download the results `abacus_results.tar.bz2` (496 MiB) from this [Google Drive link](https://drive.google.com/file/d/16fzK-1Z8gabdCZ1oibe8Q8effy8wZsoP/view?usp=sharing) and extract it to `results/`
 - \[Optional\] Extract the zipped file `act_injection_traces.tar.bz2`
 
 ## Example Use
