@@ -9,6 +9,20 @@ from argparse import ArgumentParser
 import itertools
 import random
 
+parser = argparse.ArgumentParser()
+
+# -wd working_directory  -od output_directory -td trace_directory
+parser.add_argument('-wd', '--working_directory', type=str, required=True,
+                    help='The directory where the ramulator executable is located')
+parser.add_argument('-od', '--output_directory', type=str, required=True,
+                    help='The directory where the output files will be stored')
+parser.add_argument('-td', '--trace_directory', type=str,
+                    required=True, help='The directory where the traces are located')
+parser.add_argument('-exec', '--execution_mode', type=str,
+                    required=True, help='The execution mode')
+
+args = parser.parse_args()
+
 BASH_HEADER = "#!/bin/bash\n"
 
 # the command line slurm will execute
@@ -209,9 +223,9 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, workloa
   
   return SBATCH_CMD
 
-ramulator_dir = '/mnt/panzer/aolgun/ramulator' # ramulator project directory
-output_dir = '/mnt/panzer/aolgun/ramulator/results' # where results will be stored
-trace_dir = '/mnt/panzer/aolgun/ramulator/cputraces' # where cputraces are
+ramulator_dir = args.working_directory
+output_dir = args.output_directory
+trace_dir = args.trace_directory
 
 # remove scripts
 os.system('rm -r ' + ramulator_dir + '/run_scripts')
