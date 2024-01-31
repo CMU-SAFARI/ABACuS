@@ -6,17 +6,6 @@ print_colorful_text() {
   echo -e "\e[${color_code}m${text}\e[0m"
 }
 
-if [ "$1" = "--slurm" ]; then
-  execution_mode_arg="slurm"
-  echo "Running in job-based mode"
-elif [ "$1" = "--native" ]; then
-  execution_mode_arg="native"
-  echo "Running in native mode"
-else 
-  echo "Provide correct execution mode: --slurm or --native"
-  exit
-fi
-
 echo "==================  Compiling the simulator =================="
 sh ./build.sh
 

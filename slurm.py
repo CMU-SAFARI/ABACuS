@@ -37,47 +37,47 @@ SBATCH_COMMAND_LINE = "\
 
 # the script executed by the command line slurm executes
 BASE_COMMAND_LINE = "\
-    LD_LIBRARY_PATH=/mnt/panzer/aolgun/EXT_LIBS \
+    LD_LIBRARY_PATH=/mnt/panzer/aevaluator/EXT_LIBS \
     {ramulator_dir}/ramulator "
 
 # nRH sweep all mechanisms
 configs = [
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra-Baseline.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA1000.yaml'
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline-1R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline-4R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125-1R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125-4R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS500-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS1000-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-1R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-4R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-1R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-4R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/ACT-period-256ms.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/MC-Baseline.yaml'
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS250.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS500.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS1000.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra-Baseline.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene125.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene250.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene500.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene1000.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra125.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra250.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra500.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra1000.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA125.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA250.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA500.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA1000.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA125.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA250.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA500.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA1000.yaml'
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline-1R.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline-4R.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125-1R.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125-4R.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS500-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS1000-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-1R-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-4R-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-1R-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-4R-Big.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/ACT-period-256ms.yaml',
+  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
 
 traces = [
