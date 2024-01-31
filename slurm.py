@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 import itertools
 import random
 
-parser = argparse.ArgumentParser()
+parser = ArgumentParser()
 
 # -wd working_directory  -od output_directory -td trace_directory
 parser.add_argument('-wd', '--working_directory', type=str, required=True,
@@ -37,7 +37,6 @@ SBATCH_COMMAND_LINE = "\
 
 # the script executed by the command line slurm executes
 BASE_COMMAND_LINE = "\
-    LD_LIBRARY_PATH=/mnt/panzer/aevaluator/EXT_LIBS \
     {ramulator_dir}/ramulator "
 
 # nRH sweep all mechanisms
