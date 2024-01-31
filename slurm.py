@@ -64,18 +64,6 @@ configs = [
   '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA250.yaml',
   '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA500.yaml',
   '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA1000.yaml'
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline-1R.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline-4R.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125-1R.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125-4R.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS500-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS1000-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-1R-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS125-4R-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-1R-Big.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Revision/ABACUS250-4R-Big.yaml',
   '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/ACT-period-256ms.yaml',
   '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
