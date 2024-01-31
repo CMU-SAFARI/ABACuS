@@ -60,7 +60,7 @@ configs = [
   '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA125.yaml',
   '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA250.yaml',
   '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA500.yaml',
-  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA1000.yaml'
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA1000.yaml',
   '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/ACT-period-256ms.yaml',
   '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
