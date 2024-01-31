@@ -230,9 +230,10 @@ for config in configs:
     all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [trace]))
   
   ###################### 8-core traces ######################
-  for workload in traces:
-    print([workload] * 8)
-    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [workload] * 8))
+  if config != '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/ACT-period-256ms.yaml':
+    for workload in traces:
+      print([workload] * 8)
+      all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [workload] * 8))
   
 with open('run.sh', 'w') as f:
   f.write('\n'.join(all_sbatch_commands))
