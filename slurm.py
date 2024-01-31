@@ -18,8 +18,6 @@ parser.add_argument('-od', '--output_directory', type=str, required=True,
                     help='The directory where the output files will be stored')
 parser.add_argument('-td', '--trace_directory', type=str,
                     required=True, help='The directory where the traces are located')
-parser.add_argument('-exec', '--execution_mode', type=str,
-                    required=True, help='The execution mode')
 
 args = parser.parse_args()
 
@@ -41,30 +39,30 @@ BASE_COMMAND_LINE = "\
 
 # nRH sweep all mechanisms
 configs = [
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS125.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS250.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS500.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/ABACUS/ABACUS1000.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Baseline.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra-Baseline.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene125.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene250.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene500.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Graphene1000.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra125.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra250.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra500.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/Hydra1000.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA125.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA250.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA500.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/REGA1000.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA125.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA250.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA500.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/PARA1000.yaml'
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/ACT-period-256ms.yaml',
-  '/mnt/panzer/aevaluator/ramulator/configs/ABACUS/Others/MC-Baseline.yaml'
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Baseline.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra-Baseline.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA1000.yaml'
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/ACT-period-256ms.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
 
 traces = [
