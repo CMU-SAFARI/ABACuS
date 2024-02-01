@@ -5,19 +5,16 @@ print_colorful_text() {
   echo "\e[${color_code}m${text}\e[0m"
 }
 
-
-
 if [ "$1" = "--slurm" ]; then
       execution_mode_arg="--slurm"
-      echo "Running in Slurm mode";
-elif ([ "$1" = "--native" ]); then
-      execution_mode_arg="--native"
-      echo "Running in native mode";
+      echo "Running in your Slurm cluster";
+elif ([ "$1" = "--personalcomputer" ]); then
+      execution_mode_arg="--personalcomputer"
+      echo "Running in personal computer";
 else 
-      echo "Provide correct execution mode: --slurm or --native"
+      echo "Provide correct execution mode: --slurm or --personalcomputer"
       exit
 fi
-
 
 container="podman"
 echo "Using podman"
@@ -29,18 +26,15 @@ ${container} run docker.io/hello-world
 
 echo "====================================================================================="
 
-echo "==================  Pulling the Docker image to run the experiments =================="
+echo "==================  Building the podman image to run the experiments =================="
 
-${container}  pull docker.io/nisabostanci/comet-image:latest
+${container} build . -t "abacus_artifact" && \
 
 echo "====================================================================================="
 
 echo "==============================  Compiling the simulator ============================="
 
-${container} run --rm -v $PWD:/app/ docker.io/nisabostanci/comet-image:latest /bin/bash -c "cd /app/ && mkdir -p build && sh ./build-docker.sh"
-
-
-${container} run --rm -v $PWD:/app/ docker.io/nisabostanci/comet-image:latest/bin/bash -c "./app/ramulator"
+${container} run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "cd /app/ && mkdir -p build && sh ./build-docker.sh"
 
 echo "====================================================================================="
 echo "=============  Generating the run scripts (this may take a while) ==================="
