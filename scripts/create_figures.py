@@ -3,7 +3,7 @@
 import os
 
 # cd into ae_scripts
-os.chdir('scripts/ae_scripts')
+os.chdir('ae_scripts')
 
 # if "distr_bank_usage_first_plot.csv" does not exist, run preprocess_activation_histograms.py
 if not os.path.exists('distr_bank_usage_first_plot.csv'):
