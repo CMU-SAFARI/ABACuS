@@ -64,8 +64,10 @@ MED_RBMPKI = ['510.parest', '462.libquantum', 'tpch2', 'wc_8443', 'ycsb_aserver'
 HIGH_RBMPKI = ['519.lbm', '459.GemsFDTD', '450.soplex', 'h264_decode', '520.omnetpp', '433.milc', '434.zeusmp', 'random_10.trace', 'bfs_dblp', '429.mcf', '549.fotonik3d', '470.lbm', 'bfs_ny', 'bfs_cm2003', '437.leslie3d']
 MEDHIGH_RBMPKI = MED_RBMPKI + HIGH_RBMPKI
 
+print("Copying activate_periods from ae-results, this might take some time...")
 os.system("cp -r ../../ae-results/ACT-period-256ms.yaml activate_periods")
 
+print("Begin processing activate_periods...")
 # iterate over all workloads
 for workload in MEDHIGH_RBMPKI:
   df = pd.DataFrame(columns=['workload', 'cumulative_bank_usage_stat', 'analysis_threshold'])
