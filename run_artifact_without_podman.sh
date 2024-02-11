@@ -9,7 +9,6 @@ print_colorful_text() {
 echo "==================  Compiling the simulator =================="
 sh ./build.sh
 
-echo "Please make sure that this project directory is mounted to the same path on every machine on the compute cluster..."
 for i in {5..1}; do
   echo -ne "$i seconds to start the experiments...\r"
   sleep 1
@@ -29,11 +28,6 @@ else
 
   tar -xvf cputraces.tar.bz2 --no-same-owner
 fi
-
-# echo "==================  Decompressing the traces into ./cputraces =================="
-# wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=18BAvuQybyKT-RRHeAUFOsMAttG4xWlj-' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=18BAvuQybyKT-RRHeAUFOsMAttG4xWlj-" -O cputraces.tar.bz2 && rm -rf /tmp/cookies.txt
-
-# tar -xvf cputraces.tar.bz2
 
 echo "==================  Launching experiments =================="
 sh ./run.sh
