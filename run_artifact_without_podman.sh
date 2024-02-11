@@ -16,7 +16,7 @@ for i in {5..1}; do
 done
 
 echo "==================  Generating run scripts =================="
-python3 ./slurm.py -wd $PWD -od $PWD/ae-results -td $PWD/cputraces
+python3 ./slurm_without_podman.py -wd $PWD -od $PWD/ae-results -td $PWD/cputraces
 
 
 # check if cputraces/ directory is empty
