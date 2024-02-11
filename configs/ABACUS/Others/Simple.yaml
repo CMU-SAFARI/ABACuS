@@ -1,0 +1,78 @@
+version: 1.0
+
+stats:
+  prefix: ddr4
+  suffix: stats
+
+processor:
+  tick: 5
+  trace:
+    - ./cputraces/429.mcf
+
+  ipc: 4
+  depth: 128
+
+  cache:
+    L3:
+      capacity: 8MB
+      latency: 31
+
+  early_exit: True
+  expected_limit_insts: 1000000
+  warmup_insts: 10000
+
+memory:
+  tick: 2
+  period: 0.625
+  standard: DDR4
+  spec:
+    org: 
+      preset: DDR4_8Gb_x8
+      Ch: 1
+      Ra: 2
+    speed:
+      preset: DDR4_3200W
+      refresh: 1X
+    power:
+      VDD: 1.2
+      VPP: 2.5
+
+      IDD0:  60
+      IPP0:  3
+      IDD2N: 50
+      IPP2N: 3
+      IDD3N: 55
+      IPP3N: 3
+      IDD4W: 145
+      IPP4W: 3
+      IDD4R: 145
+      IPP4R: 3
+      IDD5B: 362
+      IPP5B: 48
+      
+  controller:
+    addr_mapper:
+      type: Linear
+      mapping: MOP4CLXOR
+    scheduler:
+      type: FRFCFS_CAP
+      cap: 16
+    row_policy: 
+      type: Opened
+    refresh:
+      type: Generic
+    record_cmd_trace: False
+    print_cmd_trace: False
+    cmd_trace_prefix: "TEST"
+    track_activation_count: False
+    activation_count_dump_file: "activate_dump.txt"
+    otherq_max: 100000 # size of the otherq, needs to be large for preventive refreshes
+  translation:
+    type: LessRandom
+    hydra: Unfortunately
+  
+
+post_warmup_settings:
+  memory:
+    controller:
+      track_activation_count: False

@@ -1,0 +1,1 @@
+./ramulator --config configs/ABACUS/Others/Simple.yaml
