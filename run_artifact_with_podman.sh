@@ -6,41 +6,32 @@ print_colorful_text() {
 }
 
 if [ "$1" = "--slurm" ]; then
-      execution_mode_arg="--slurm"
       echo "Running in your Slurm cluster";
 elif ([ "$1" = "--personalcomputer" ]); then
-      execution_mode_arg="--personalcomputer"
-      echo "Running in personal computer";
+      echo "Running in your personal computer";
 else 
       echo "Provide correct execution mode: --slurm or --personalcomputer"
       exit
 fi
 
-container="podman"
-echo "Using podman"
-
- 
-echo "==================  Run a container test to make sure container works =================="
-
-${container} run docker.io/hello-world
-
-echo "====================================================================================="
-
 echo "==================  Building the podman image to run the experiments =================="
 
-${container} build . -t "abacus_artifact" && \
+podman build . -t "abacus_artifact" && \
 
 echo "====================================================================================="
 
 echo "==============================  Compiling the simulator ============================="
 
-${container} run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "cd /app/ && mkdir -p build && sh ./build-docker.sh"
+podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "cd /app/ && mkdir -p build && sh ./build-docker.sh"
 
 echo "====================================================================================="
 echo "=============  Generating the run scripts (this may take a while) ==================="
 
-${container} run --rm -v $PWD:/app/ docker.io/nisabostanci/comet-image:latest /bin/bash -c "python3 /app/genrunsp_docker.py ${PWD} ${execution_mode_arg} ${container}" 
-
+if  [ "$1" = "--slurm" ]; then
+  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/slurm_with_podman.py" 
+else 
+  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/personal_computer_with_podman.py" 
+fi
 
 # check if cputraces/ directory is empty
 if [ "$(ls -A cputraces/)" ]; then
@@ -48,10 +39,10 @@ if [ "$(ls -A cputraces/)" ]; then
 else
   echo "==================  cputraces/ directory is empty =================="
   echo "==================  Downloading the traces into ./cputraces =================="
-  wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=18BAvuQybyKT-RRHeAUFOsMAttG4xWlj-' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=18BAvuQybyKT-RRHeAUFOsMAttG4xWlj-" -O cputraces.tar.bz2 && rm -rf /tmp/cookies.txt
+  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/download_traces.py"
 echo "==================  Decompressing the traces into ./cputraces =================="
 
-  tar -xvf cputraces.tar.bz2
+  tar -xvf cputraces.tar.bz2 --no-same-owner
 fi
 
 echo "====================================================================================="
