@@ -22,15 +22,15 @@ echo "==========================================================================
 
 echo "==============================  Compiling the simulator ============================="
 
-podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "cd /app/ && mkdir -p build && sh ./build-docker.sh"
+podman run --rm -v $PWD:/app/ abacus_artifact "cd /app/ && mkdir -p build && sh ./build-docker.sh"
 
 echo "====================================================================================="
 echo "=============  Generating the run scripts (this may take a while) ==================="
 
 if  [ "$1" = "--slurm" ]; then
-  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/slurm_with_podman.py" 
+  podman run --rm -v $PWD:/app/ abacus_artifact "python3 /app/slurm_with_podman.py" 
 else 
-  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/personal_computer_with_podman.py" 
+  podman run --rm -v $PWD:/app/ abacus_artifact "python3 /app/personal_computer_with_podman.py" 
 fi
 
 # check if cputraces/ directory is empty
@@ -39,15 +39,14 @@ if [ "$(ls -A cputraces/)" ]; then
 else
   echo "==================  cputraces/ directory is empty =================="
   echo "==================  Downloading the traces into ./cputraces =================="
-  podman run --rm -v $PWD:/app/ abacus_artifact /bin/bash -c "python3 /app/download_traces.py"
-echo "==================  Decompressing the traces into ./cputraces =================="
-
-  tar -xvf cputraces.tar.bz2 --no-same-owner
+  podman run --rm -v $PWD:/app/ abacus_artifact "python3 /app/download_traces.py"
+  echo "==================  Decompressing the traces into ./cputraces =================="
+  podman run --rm -v $PWD:/app/ abacus_artifact "tar -xvf cputraces.tar.bz2 --no-same-owner"
 fi
 
 echo "====================================================================================="
 echo "==============================  Launching experiments  =============================="
-sh ./run.sh 
+# sh ./run.sh 
 
 
 

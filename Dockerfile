@@ -11,9 +11,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   wget \
   vim
 
+COPY requirements.txt /app/requirements.txt
+
 WORKDIR /app
 
 RUN pip install --no-cache-dir --upgrade pip \
   && pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-l", "-c"]

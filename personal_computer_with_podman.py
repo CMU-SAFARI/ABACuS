@@ -123,7 +123,7 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, workloa
   )
 
   ramulator_config=None
-  with open("/app/"+config) as f:    
+  with open(config) as f:    
     ramulator_config = yaml.load(f, Loader=yaml.FullLoader)
   bare_config = config.split('/')[-1]
 
