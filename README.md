@@ -25,7 +25,9 @@ BibTeX format for your convenience:
 }
 ```
 
-## Repository File Structure
+# Content below is obsolete for artifact evaluation. Please refer to the standalone AE document for usage instructions.
+
+## Repository File Structure 
 
 ```
 .
