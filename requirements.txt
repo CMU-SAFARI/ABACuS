@@ -1,4 +1,4 @@
 seaborn
 pandas
-gdown
 pyyaml
+wget
