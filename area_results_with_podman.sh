@@ -1,0 +1,1 @@
+podman run --rm -v $PWD:/app/ abacus_artifact "cd /abacus_cacti/ && python3 results.py"

@@ -1,0 +1,1 @@
+podman run --rm -v $PWD:/app/ abacus_artifact "cd /scripts/ && python3 create_figures.py"

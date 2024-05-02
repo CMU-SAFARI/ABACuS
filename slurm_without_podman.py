@@ -9,6 +9,18 @@ from argparse import ArgumentParser
 import itertools
 import random
 
+parser = ArgumentParser()
+
+# -wd working_directory  -od output_directory -td trace_directory
+parser.add_argument('-wd', '--working_directory', type=str, required=True,
+                    help='The directory where the ramulator executable is located')
+parser.add_argument('-od', '--output_directory', type=str, required=True,
+                    help='The directory where the output files will be stored')
+parser.add_argument('-td', '--trace_directory', type=str,
+                    required=True, help='The directory where the traces are located')
+
+args = parser.parse_args()
+
 BASH_HEADER = "#!/bin/bash\n"
 
 # the command line slurm will execute
@@ -23,47 +35,34 @@ SBATCH_COMMAND_LINE = "\
 
 # the script executed by the command line slurm executes
 BASE_COMMAND_LINE = "\
-    LD_LIBRARY_PATH=/mnt/panzer/aolgun/EXT_LIBS \
     {ramulator_dir}/ramulator "
 
 # nRH sweep all mechanisms
 configs = [
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra-Baseline.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Graphene1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Hydra1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/REGA1000.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA125.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA250.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA500.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/PARA1000.yaml'
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline-1R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/Baseline-4R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125-1R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/ABACUS/ABACUS125-4R.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS500-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS1000-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-1R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS125-4R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-1R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS250-4R-Big.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/ACT-period-256ms.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/Others/MC-Baseline.yaml'
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/ABACUS/ABACUS1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Baseline.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra-Baseline.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Graphene1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/Hydra1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/REGA1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA125.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA250.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA500.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/PARA1000.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/ACT-period-256ms.yaml',
+  '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
 
 traces = [
@@ -209,9 +208,9 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, workloa
   
   return SBATCH_CMD
 
-ramulator_dir = '/mnt/panzer/aolgun/ramulator' # ramulator project directory
-output_dir = '/mnt/panzer/aolgun/ramulator/results' # where results will be stored
-trace_dir = '/mnt/panzer/aolgun/ramulator/cputraces' # where cputraces are
+ramulator_dir = args.working_directory
+output_dir = args.output_directory
+trace_dir = args.trace_directory
 
 # remove scripts
 os.system('rm -r ' + ramulator_dir + '/run_scripts')
@@ -231,9 +230,10 @@ for config in configs:
     all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [trace]))
   
   ###################### 8-core traces ######################
-  for workload in traces:
-    print([workload] * 8)
-    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [workload] * 8))
+  if config != '/mnt/panzer/aevaluator/ABACuS/configs/ABACUS/Others/ACT-period-256ms.yaml':
+    for workload in traces:
+      print([workload] * 8)
+      all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [workload] * 8))
   
 with open('run.sh', 'w') as f:
   f.write('\n'.join(all_sbatch_commands))

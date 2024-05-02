@@ -146,8 +146,6 @@ namespace Ramulator
   }
 
   bool Processor::finished() {
-          printf("I AM PROCESSOR EARLY EXIT IS %d\n", early_exit);
-      printf("I AM PROCESSOR time limit IS %d\n", time_limit);
 
     if (time_limit != 0)
     {
@@ -166,7 +164,6 @@ namespace Ramulator
     }
     else
     {
-      printf("I AM PROCESSOR EARLY EXIT IS %d\n", early_exit);
       if (early_exit) {
         for (unsigned int i = 0 ; i < cores.size(); ++i) {
           if (cores[i]->has_reached_limit()) {

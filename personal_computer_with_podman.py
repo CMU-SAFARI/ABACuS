@@ -1,64 +1,48 @@
 # basic requirements:
 # - the cache size should be scaled per core
 # - make sure we are running all traces
-
 import yaml
 import os
 import random
-from argparse import ArgumentParser
 import itertools
 import random
 
 BASH_HEADER = "#!/bin/bash\n"
 
 # the command line slurm will execute
-SBATCH_COMMAND_LINE = "\
-    sbatch --cpus-per-task=1 --nodes=1 --ntasks=1 \
-    --chdir={ramulator_dir} \
-    --output={output_file_name} \
-    --error={error_file_name} \
-    --partition=cpu_part \
-    --job-name='{job_name}' \
-    {ramulator_dir}/run_scripts/{config_name}{config_extension}-{workload}.sh"
+BATCH_COMMAND_LINE = "./docker_wrapper.sh podman run --rm -v {ramulator_dir}:/app/ abacus_artifact /app/run_scripts/{config_name}{config_extension}-{workload}.sh\""
 
 # the script executed by the command line slurm executes
 BASE_COMMAND_LINE = "\
-    LD_LIBRARY_PATH=/mnt/panzer/aolgun/EXT_LIBS \
-    {ramulator_dir}/ramulator "
+    /app/ramulator "
 
-# RowHammer attack
-RH32_configs = [
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/ABACUS500-RH32.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Baseline-RH32.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Graphene500-RH32.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/REGA500-RH32.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/PARA500-RH32.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Hydra500-RH32.yaml',
+# nRH sweep all mechanisms
+configs = [
+  '/app/configs/ABACUS/ABACUS/ABACUS125.yaml',
+  '/app/configs/ABACUS/ABACUS/ABACUS250.yaml',
+  '/app/configs/ABACUS/ABACUS/ABACUS500.yaml',
+  '/app/configs/ABACUS/ABACUS/ABACUS1000.yaml',
+  '/app/configs/ABACUS/Others/Baseline.yaml',
+  '/app/configs/ABACUS/Others/Hydra-Baseline.yaml',
+  '/app/configs/ABACUS/Others/Graphene125.yaml',
+  '/app/configs/ABACUS/Others/Graphene250.yaml',
+  '/app/configs/ABACUS/Others/Graphene500.yaml',
+  '/app/configs/ABACUS/Others/Graphene1000.yaml',
+  '/app/configs/ABACUS/Others/Hydra125.yaml',
+  '/app/configs/ABACUS/Others/Hydra250.yaml',
+  '/app/configs/ABACUS/Others/Hydra500.yaml',
+  '/app/configs/ABACUS/Others/Hydra1000.yaml',
+  '/app/configs/ABACUS/Others/REGA125.yaml',
+  '/app/configs/ABACUS/Others/REGA250.yaml',
+  '/app/configs/ABACUS/Others/REGA500.yaml',
+  '/app/configs/ABACUS/Others/REGA1000.yaml',
+  '/app/configs/ABACUS/Others/PARA125.yaml',
+  '/app/configs/ABACUS/Others/PARA250.yaml',
+  '/app/configs/ABACUS/Others/PARA500.yaml',
+  '/app/configs/ABACUS/Others/PARA1000.yaml',
+  '/app/configs/ABACUS/Others/ACT-period-256ms.yaml',
+  '/app/configs/ABACUS/Others/MC-Baseline.yaml'
 ]
-
-# Hydra adversarial
-AH_configs = [
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/ABACUS500-AH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Baseline-AH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Graphene500-AH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/REGA500-AH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/PARA500-AH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Hydra500-AH.yaml',
-]
-
-# ABACuS adversarial
-AAH_configs = [
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/ABACUS500-AAH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Baseline-AAH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Graphene500-AAH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/REGA500-AAH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/PARA500-AAH.yaml',
-  '/mnt/panzer/aolgun/ramulator/configs/ABACUS/AttackPresent/Hydra500-AAH.yaml',
-]
-
-new_aah = ['/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS500-AAH-Big.yaml']
-new_ah = ['/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS500-AH-Big.yaml']
-new_rh32 = ['/mnt/panzer/aolgun/ramulator/configs/ABACUS/Revision/ABACUS500-RH32-Big.yaml']
 
 traces = [
   "random_10.trace",
@@ -126,14 +110,13 @@ traces = [
   "ycsb_eserver"
 ]
 
-
 LOW_RBMPKI = ['531.deepsjeng', '502.gcc', '541.leela', '435.gromacs', '481.wrf', '458.sjeng', '445.gobmk', '444.namd', '508.namd', '401.bzip2', '456.hmmer', '403.gcc', '464.h264ref', '526.blender', '447.dealII', '544.nab', '523.xalancbmk', '500.perlbench', '538.imagick', '525.x264', '507.cactuBSSN', '511.povray']
 MED_RBMPKI = ['462.libquantum', '473.astar', '510.parest', '482.sphinx3', '505.mcf', '557.xz', '471.omnetpp', '483.xalancbmk', '436.cactusADM']
 HIGH_RBMPKI = ['520.omnetpp', '450.soplex', '470.lbm', '519.lbm', '434.zeusmp', '433.milc', '459.GemsFDTD', '549.fotonik3d', '429.mcf', '437.leslie3d']
 
 
 # @returns SBATCH command used to invoke the ramulator script
-def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, adversarial_trace, config, workload_name_list):
+def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, workload_name_list):
 
   CMD = BASE_COMMAND_LINE.format(
     ramulator_dir = ramulator_dir,
@@ -146,16 +129,21 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, adversarial_tra
 
   workload_name_list_dir = [(trace_dir + "/" + x) for x in workload_name_list]
   ramulator_config["processor"]["trace"] = workload_name_list_dir
-  ramulator_config["processor"]["cache"]["L3"]["capacity"] = str(int(len(workload_name_list_dir) * 2)) + "MB"
-  ramulator_config["memory"]["controller"]["act_injector"]["trace"] = trace_dir + "/" + adversarial_trace
-  ramulator_config["memory"]["controller"]["act_injector"]["debug"] = False
 
-  SBATCH_CMD = SBATCH_COMMAND_LINE.format(
+  if "cache" in ramulator_config["processor"]:
+    if ramulator_config["processor"]["cache"]:
+      if "L3" in ramulator_config["processor"]["cache"]:
+        ramulator_config["processor"]["cache"]["L3"]["capacity"] = str(int(len(workload_name_list_dir) * 2)) + "MB"
+
+  if "MC-Baseline.yaml" not in config:
+    ramulator_config["processor"]["warmup_insts"] = int(100000000/len(workload_name_list_dir))
+    if len(workload_name_list_dir) > 1:
+      ramulator_config["processor"]["warmup_insts"] = 0
+    ramulator_config["processor"]["expected_limit_insts"] = int(200000000/len(workload_name_list_dir))
+
+  BATCH_CMD = BATCH_COMMAND_LINE.format(
     ramulator_dir = ramulator_dir,
-    output_file_name = '{output_file_name}',
-    error_file_name = '{error_file_name}',
     config_extension = '',
-    job_name = '{job_name}',
     config_name = bare_config,
     workload = '{workload}'
   )
@@ -178,12 +166,9 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, adversarial_tra
     ramulator_config["post_warmup_settings"]["memory"]["controller"]["refresh_based_defense"]["activation_period_file_name"] = period_dump_file_name
 
   # Finalize CMD
-  CMD += "\"" + yaml.dump(ramulator_config) + "\""
+  CMD += "\"" + yaml.dump(ramulator_config) + "\"" + " 1> " + output_dir + '/' + bare_config + '/' + prog_list + '/output.txt 2> ' + output_dir + '/' + bare_config + '/' + prog_list + '/error.txt'
 
-  SBATCH_CMD = SBATCH_CMD.format(
-    output_file_name = output_dir + '/' + bare_config + '/' + prog_list + '/output.txt',
-    error_file_name = output_dir + '/' + bare_config + '/' + prog_list + '/error.txt',
-    job_name = prog_list,
+  BATCH_CMD = BATCH_CMD.format(
     workload = prog_list
   )            
 
@@ -194,12 +179,11 @@ def generateExecutionSetup(ramulator_dir, output_dir, trace_dir, adversarial_tra
   f.write(CMD)
   f.close()
   
-  return SBATCH_CMD
+  return BATCH_CMD
 
-
-ramulator_dir = '/mnt/panzer/aolgun/ramulator'
-output_dir = '/mnt/panzer/aolgun/ramulator/results'
-trace_dir = '/mnt/panzer/aolgun/ramulator/cputraces'
+ramulator_dir = '/app'
+output_dir = '/app/ae-results'
+trace_dir = '/app/cputraces'
 
 # remove scripts
 os.system('rm -r ' + ramulator_dir + '/run_scripts')
@@ -210,30 +194,20 @@ os.system('mkdir -p ' + ramulator_dir + '/run_scripts')
 all_sbatch_commands = []
 all_sbatch_commands.append(BASH_HEADER)
 
-for config in RH32_configs:
+for config in configs:
   os.system('mkdir -p ' + output_dir + '/' + config.split('/')[-1])
-  
-  # single core traces
+
+  ###################### single core traces ######################
   for trace in traces:
     print(trace)
-    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, "rh32_new.trace", config, [trace]))
-
-for config in AH_configs:
-  os.system('mkdir -p ' + output_dir + '/' + config.split('/')[-1])
+    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [trace]))
   
-  # single core traces
-  for trace in traces:
-    print(trace)
-    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, "hydra_adv_1K_r500_new.trace", config, [trace]))
-
-for config in AAH_configs:
-  os.system('mkdir -p ' + output_dir + '/' + config.split('/')[-1])
+  ###################### 8-core traces ######################
+  if config != '/app/configs/ABACUS/Others/ACT-period-256ms.yaml':
+    for workload in traces:
+      print([workload] * 8)
+      all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, config, [workload] * 8))
   
-  # single core traces
-  for trace in traces:
-    print(trace)
-    all_sbatch_commands.append(generateExecutionSetup(ramulator_dir, output_dir, trace_dir, "SAC_adv_i32_new.trace", config, [trace]))
-
 with open('run.sh', 'w') as f:
   f.write('\n'.join(all_sbatch_commands))
 
