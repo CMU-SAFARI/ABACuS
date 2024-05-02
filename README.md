@@ -76,6 +76,27 @@ We model ABACuS, Graphene, and Hydra's area, power, and energy cost using CACTI.
 
 We implement ABACuS's hardware design in Verilog to faithfully measure its circuit latency. The Verilog implementation is under `abacus_verilog/`. You may use the `abacus_verilog/dc.tcl` script to launch Synopsys (synthesis) analysis runs.
 
+## Generating workload memory access traces
+
+We use the [trace generator tool provided in Ramulator's open source repository](https://github.com/CMU-SAFARI/ramulator/tree/master/trace_generator) to generate our workload memory access traces. We refer the reader to the linked repository for trace generation instructions. We configure the trace generator tool as follows.
+
+```
+    L1 D$ size  = 65536 bytes
+    L1 D$ associativity = 8 ways
+
+    L2 D$ size = 2097152 bytes
+    L2 D$ associativity = 8 ways
+
+|-------------------|-----------------------------------------------------|
+| Interval size     | 200m                                                |
+| Trace type        | cpu                                                 |
+| Instruction fetch | Disabled                                            |
+| Address type      | Virtual                                             |
+| Simulation type   | Fast (Selected the interval with the most weight)   |
+```
+
+We run the trace generation tool in a host system with an Intel Xeon Gold 5118 processor.
+
 ## Contacts:
 Ataberk Olgun (ataberk.olgun [at] safari [dot] ethz [dot] ch)  
 Nisa Bostanci (nisa.bostanci [at] safari [dot] ethz [dot] ch)  
